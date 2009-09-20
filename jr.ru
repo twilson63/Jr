@@ -1,0 +1,3 @@
+require 'jr'
+
+run Jr
