@@ -10,7 +10,6 @@ Jr('controller', 'widgets', {
     });
     
     Jr('html',
-      jTag('h2', 'Widgets') + _br +
       jList(widget_list) + _br +
       jLink('New Widget','#/widgets/add') 
     );
