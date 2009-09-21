@@ -37,7 +37,6 @@
       _unbind();
       try {
         var rte = arguments[0].replace(/#/,'').split('/');
-        console.log(rte)
         switch(rte.length) {
           case 1:
             Jr()[rte[0]].index();
