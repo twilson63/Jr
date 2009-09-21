@@ -71,7 +71,7 @@ What is really neat about this capability is that you can create several control
 
 Now, I know this does not have all the glamor of some of the rest style frameworks, and is more like old school rails, but by using these actions, you are able to keep the controller framework under 5k.  The other side of this, is that you can create any action you want and call it anything you want, as long as it does not conflict with Javascript Reserved words.  (new, delete) are a couple of words you can't use.
 
-Adding a RESTful Datastore is very simple, especially with the jQuery Plugins for [CloudKit](http://cloudkit.org), and [CouchDb](http://couchdb.org), and more.
+Adding a RESTful Datastore is very simple, especially with the jQuery Plugins for [CloudKit](http://getcloudkit.org), and [CouchDb](http://couchdb.org), and more.
 
 As far as views, Jr leaves this up to you on how to implement, [jTag](http://twilson63.github.com/jTag) is one that we use, but there is also [Micro Templating](http://ejohn.org/blog/javascript-micro-templating/).
 
