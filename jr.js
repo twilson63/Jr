@@ -25,29 +25,31 @@
     }
     
   Jr.fn = Jr.prototype = {
-    Specifications: {
-      
-    },
     container: "#main",
+    run: function() {
+      $.history.init(Jr().route);
+      $.history.load(arguments[0]);
+    },
     controller: function(name, fn) {
       this[name] = fn;
     },
-    route: function() { with(this) {
+    route: function() { with(Jr()) {
       _unbind();
       try {
-        var rte = arguments[0].replace(/#\//,'').split('/');
+        var rte = arguments[0].replace(/#/,'').split('/');
+        console.log(rte)
         switch(rte.length) {
           case 1:
-            this[rte[0]].index();
+            Jr()[rte[0]].index();
             break;
           case 2:
-            this[rte[0]][rte[1]]();
+            Jr()[rte[0]][rte[1]]();
             break;
           case 3:
-            this[rte[0]][rte[2]](rte[1]);
+            Jr()[rte[0]][rte[2]](rte[1]);
             break;
           case 4:
-            this[rte[0]][rte[2]](rte[3], rte[1]);
+            Jr()[rte[0]][rte[2]](rte[3], rte[1]);
             break;            
         }
 
@@ -58,8 +60,6 @@
       }
       
       _bind();
-      // set location
-      //window.location = arguments[0];
     }},
     html: function(content) {
       $(this.container).html(content);
@@ -67,12 +67,16 @@
     _bind: function() {
       // bind routes
       $('a:href=#').bind('click', function() {
-        Jr('route', '#' + this.href.split(/#/)[1]);
+        $.history.load(this.href.split(/#/)[1]);
+        //Jr('route', '#' + this.href.split(/#/)[1]);
+        return false;
       });
       
       // bind forms
       $('form').bind('submit', function() {
-        Jr('route', '#' + this.action.split(/#/)[1]);
+        $.history.load(this.action.split(/#/)[1]);
+        //Jr('route', '#' + this.action.split(/#/)[1]);
+        return false;
       });
     },
     _unbind: function () {

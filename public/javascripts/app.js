@@ -5,13 +5,13 @@ Jr('controller', 'widgets', {
     var widget_list = [];
     $.each(this.widgets, function(i,e) {
       widget_list.push(
-        jLink(e, '#/widgets/?/show'.replace(/\?/, i))
+        jLink(e, '#widgets/?/show'.replace(/\?/, i))
       );
     });
     
     Jr('html',
       jList(widget_list) + _br +
-      jLink('New Widget','#/widgets/add') 
+      jLink('New Widget','#widgets/add') 
     );
   },
   add: function () {
@@ -20,7 +20,7 @@ Jr('controller', 'widgets', {
         jLabel('name', "Name" + _br +
         jText('name')) + _br +
         jSubmit('Add Widget'),
-        jAt('action', '#/widgets/create')
+        jAt('action', '#widgets/create')
       )  
     );
   },
@@ -31,9 +31,9 @@ Jr('controller', 'widgets', {
   show: function(id) {
     Jr('html', 
       jTag('h2', this.widgets[id]) + _br +
-      jLink('Edit', '#/widgets/?/edit'.replace(/\?/, id)) + _space + 
-      jLink('Delete', '#/widgets/?/destroy'.replace(/\?/, id)) + _space +
-      jLink('Return', '#/widgets')
+      jLink('Edit', '#widgets/?/edit'.replace(/\?/, id)) + _space + 
+      jLink('Delete', '#widgets/?/destroy'.replace(/\?/, id)) + _space +
+      jLink('Return', '#widgets')
     );
   },
   edit: function (id) {
@@ -42,7 +42,7 @@ Jr('controller', 'widgets', {
         jLabel('name', "Name" + _br +
         jText('name', this.widgets[id])) + _br +
         jSubmit('Update Widget'),
-        jAt('action', '#/widgets/?/update'.replace(/\?/, id))
+        jAt('action', '#widgets/?/update'.replace(/\?/, id))
       )  
     );    
   },
@@ -57,6 +57,8 @@ Jr('controller', 'widgets', {
 });
 
 $(document).ready(function(){
-  Jr('container', '#main')
-  Jr('route', '#/widgets');
+  // Setup div Container
+  Jr('container', '#main');
+  // Invoke Default Controller to Run and setup history
+  Jr('run', 'widgets');
 });
