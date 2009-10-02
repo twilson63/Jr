@@ -1,4 +1,4 @@
-/* Jr a light framework for single page javascript apps */
+/* Jr a light framework for single page javascript apps v.0.1*/
 (function(){
   var
     window = this,
@@ -9,7 +9,7 @@
         case 1: 
           return Jr.fn[arguments[0]];
         case 2:
-          if(arguments[0] == "container") {
+          if((arguments[0] == "container") || (arguments[0] == "db")) {
             Jr.fn[arguments[0]] = arguments[1];
             return Jr.fn[arguments[0]];
           } else {
@@ -26,7 +26,19 @@
     
   Jr.fn = Jr.prototype = {
     container: "#main",
+    db: null,
     run: function() {
+      $('a:href=#').live('click', function() {
+        $.history.load(this.href.split(/#/)[1]);
+        return false;
+      });
+
+      // bind forms
+      $('form').live('submit', function() {
+        $.history.load(this.action.split(/#/)[1]);
+        return false;
+      });
+      
       $.history.init(Jr().route);
       $.history.load(arguments[0]);
     },
@@ -34,9 +46,9 @@
       this[name] = fn;
     },
     route: function() { with(Jr()) {
-      _unbind();
       try {
         var rte = arguments[0].replace(/#/,'').split('/');
+        
         switch(rte.length) {
           case 1:
             Jr()[rte[0]].index();
@@ -58,29 +70,18 @@
         }
       }
       
-      _bind();
     }},
     html: function(content) {
       $(this.container).html(content);
     },
-    _bind: function() {
-      // bind routes
-      $('a:href=#').bind('click', function() {
-        $.history.load(this.href.split(/#/)[1]);
-        //Jr('route', '#' + this.href.split(/#/)[1]);
-        return false;
-      });
+    flash: function(display_text, options) {
       
-      // bind forms
-      $('form').bind('submit', function() {
-        $.history.load(this.action.split(/#/)[1]);
-        //Jr('route', '#' + this.action.split(/#/)[1]);
-        return false;
-      });
-    },
-    _unbind: function () {
-      $('a:href=#').unbind();
-      $('form').unbind();
+      $(this.container).prepend(
+        jDiv('flash', 
+          jTag('p', display_text),
+          jAttribute('class', options.flash_type || 'notice'))
+      );
+      setTimeout(function () { $('#flash')[options.animation || 'fadeOut']('slow') }, options.timeout || 3000);
     }
     
   }
