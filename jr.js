@@ -19,6 +19,10 @@
         case 3:
           Jr.fn[arguments[0]](arguments[1], arguments[2]);
           return Jr.fn;
+        case 4:
+          Jr.fn[arguments[0]](arguments[1], arguments[2], arguments[3]);
+          return Jr.fn;
+
         default:
           return Jr.fn;
       }
@@ -27,6 +31,8 @@
   Jr.fn = Jr.prototype = {
     container: "#main",
     db: null,
+    views: {},
+    models: {},
     run: function() {
       $('a:href=#').live('click', function() {
         $.history.load(this.href.split(/#/)[1]);
@@ -44,6 +50,15 @@
     },
     controller: function(name, fn) {
       this[name] = fn;
+    },
+    view: function(controller, name, fn) {
+      if (this.views[controller] == undefined ) {
+        this.views[controller] = {};
+      }
+      this.views[controller][name] = fn;
+    },
+    model: function(name, fn) {
+      this.models[name] = fn;      
     },
     route: function() { with(Jr()) {
       try {
@@ -66,13 +81,16 @@
 
       } catch(err) {
         if(console){
-          console.error('Routing Error:' + err);
+          console.error('Routing Error:' + err + ' ' + rte);
         }
       }
       
     }},
     html: function(content) {
       $(this.container).html(content);
+    },
+    redirect: function(path) {
+      $.history.load(path);
     },
     flash: function(display_text, options) {
       
